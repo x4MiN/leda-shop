@@ -6,8 +6,8 @@
         <title>LedaLand HomePage</title>
         <script src="https://kit.fontawesome.com/a81368914c.js"></script>
         <link rel="stylesheet" href="css/flexboxgrid.min.css">
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
         <link rel="stylesheet" href="css/style.css">
-        
     </head>
     <body lang="fa-ir" dir="rtl">
     <div class="container-all">
@@ -17,13 +17,6 @@
                 <img class="head-image" src="images/head.png" alt="turkey shopping">
             </figure>
         </div>
-        <div>
-            <img class="logo-img" src="images/logo.PNG" alt="">
-
-            <div class="card-box">
-                <a href="#"><button class="shopping-card"><i class="fas fa-shopping-cart"></i></button></a>
-            </div>
-        </div>
         
         <div class="wrapper">
             <nav>
@@ -31,7 +24,10 @@
               <input type="checkbox" id="show-menu">
               <label for="show-menu" class="menu-icon"><i class="fas fa-bars"></i></label>
               <div class="content">
-              <div class="logo"><a href="#">LedaLand</a></div>
+              <div class="logo"><a href="#">لدالند  </a></div>
+                  <div class="logoCo">
+                      <img class="logo-img" src="images/logo2.PNG" alt="">
+                  </div>
                 <ul class="links">
                     <li>
                         <a href="#" class="desktop-link">محصولات موجود
@@ -127,29 +123,49 @@
                 <input type="text" placeholder="جست و جو کنید" required>
                 <button type="submit" class="go-icon"><i class="fas fa-search"></i></button>
               </form>
+                <div class="card-box">
+                    <a href="#"><button class="shopping-card"><i class="fas fa-shopping-cart"></i></button></a>
+                </div>
             </nav>
           </div>
-            <section class="slider">
-                <div class="slides">
-                    <div class="item active" id="slide1">
-                        <img src="images/slider4.jpg" alt="">
-                        <span>لورم ایپسوم متن رندوم فارسی است</span>
-                    </div>
-                    <div class="item" id="slide2">
-                        <img src="images/slider4.jpg" alt="">
-                        <span>لورم ایپسوم متن رندوم فارسی است</span>
-                    </div>
-                    <div class="item" id="slide3">
-                        <img src="images/slider4.jpg" alt="">
-                        <span>لورم ایپسوم متن رندوم فارسی است</span>
-                    </div>
-                </div>
-                <div class="buttons">
-                    <i onclick="setSlide('slide1' , 1)" class="fas fa-circle"></i>
-                    <i onclick="setSlide('slide2' , 2)" class="fas fa-circle"></i>
-                    <i onclick="setSlide('slide3' , 3)" class="fas fa-circle"></i>
-                </div>
-            </section>
+    <div id="sync1" class="owl-carousel owl-theme">
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+        <div class="item">
+            <img src="images/slider4.jpg" alt=""></div>
+    </div>
+
+    <div id="sync2" class="owl-carousel owl-theme" hidden>
+        <div class="item">
+            <h1>1</h1></div>
+        <div class="item">
+            <h1>2</h1></div>
+        <div class="item">
+            <h1>3</h1></div>
+        <div class="item">
+            <h1>4</h1></div>
+        <div class="item">
+            <h1>5</h1></div>
+        <div class="item">
+            <h1>6</h1></div>
+        <div class="item">
+            <h1>7</h1></div>
+        <div class="item">
+            <h1>8</h1></div>
+    </div>
+
     </header>
 </div>
 
@@ -367,29 +383,92 @@
 </div>
 
 
-
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+    <script src='https://rawgit.com/Blogg-code/OwlCarousel/master/v2.3.4.js'></script>
         <script type="text/javascript">
+            $(document).ready(function() {
 
+                var sync1 = $("#sync1");
+                var sync2 = $("#sync2");
+                var slidesPerPage = 8; //globaly define number of elements per page
+                var syncedSecondary = true;
 
-        function setSlide(input,index){
-            slideIndex = index;
-            let item = document.querySelector(`#${input}`)
-            let slides = [...document.querySelector('.slides').children] ;
-            slides.forEach((Element)=>{
-                Element.classList.remove('active')
-            })
-            item.classList.add('active')
-        }
+                sync1.owlCarousel({
+                    items : 1,
+                    slideSpeed : 7000,
+                    autoplayHoverPause:true,
+                    nav: true,
+                    autoplay: true,
+                    dots: true,
+                    loop: true,
+                    rtl:true,
+                    responsiveRefreshRate : 200,
+                    navText: ['<i class="catch fa fa-angle-right"></i>','<i class="catch fa fa-angle-left"></i>'],
+                }).on('changed.owl.carousel', syncPosition);
 
-        setInterval(()=>{
-            slideIndex +1;
-            if(slideIndex==4){
-                slideIndex=1;
-            }
-            setSlide(`slide${slideIndex}` , slideIndex)
-        } , 4000)
+                sync2
+                    .on('initialized.owl.carousel', function () {
+                        sync2.find(".owl-item").eq(0).addClass("current");
+                    })
+                    .owlCarousel({
+                        items : slidesPerPage,
+                        dots: true,
+                        nav: false,
+                        smartSpeed: 200,
+                        slideSpeed : 500,
+                        slideBy: slidesPerPage, //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
+                        rtl:true,
+                        responsiveRefreshRate : 100
+                    }).on('changed.owl.carousel', syncPosition2);
 
+                function syncPosition(el) {
+                    //if you set loop to false, you have to restore this next line
+                    //var current = el.item.index;
 
+                    //if you disable loop you have to comment this block
+                    var count = el.item.count-1;
+                    var current = Math.round(el.item.index - (el.item.count/2) - .5);
+
+                    if(current < 0) {
+                        current = count;
+                    }
+                    if(current > count) {
+                        current = 0;
+                    }
+
+                    //end block
+
+                    sync2
+                        .find(".owl-item")
+                        .removeClass("current")
+                        .eq(current)
+                        .addClass("current");
+                    var onscreen = sync2.find('.owl-item.active').length - 1;
+                    var start = sync2.find('.owl-item.active').first().index();
+                    var end = sync2.find('.owl-item.active').last().index();
+
+                    if (current > end) {
+                        sync2.data('owl.carousel').to(current, 100, true);
+                    }
+                    if (current < start) {
+                        sync2.data('owl.carousel').to(current - onscreen, 100, true);
+                    }
+                }
+
+                function syncPosition2(el) {
+                    if(syncedSecondary) {
+                        var number = el.item.index;
+                        sync1.data('owl.carousel').to(number, 100, true);
+                    }
+                }
+
+                sync2.on("click", ".owl-item", function(e){
+                    e.preventDefault();
+                    var number = $(this).index();
+                    sync1.data('owl.carousel').to(number, 300, true);
+                });
+            });
+            
         </script>
     </body>
 </html>
